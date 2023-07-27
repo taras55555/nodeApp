@@ -1,0 +1,108 @@
+.main-block {
+    padding: 8px;
+    font-size: 16px;
+}
+
+.header {
+    align-items: center;
+    display: flex;
+    font-size: 2rem;
+    justify-content: center;
+}
+
+.header-nav {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.game-name {
+    padding: 16px;
+    font-weight: bold;
+}
+
+.dinamic-container {
+    padding: 16px;
+}
+
+.authorized-user {
+    display: none;
+}
+
+.game-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.game-table-row {
+    display: flex;
+}
+
+.game-table-cell {
+    border: solid 1px var(--white-color);
+    width: 100px;
+    height: 100px;
+    background-color: var(--gray-color);
+    border: 1px solid var(--black-color)
+}
+
+.game-table-cell.mini {
+    width: 30px;
+    height: 30px;
+}
+
+.login-button {
+    display: inline-block;
+}
+
+.link-button {
+    display: inline-block;
+    width: 185px;
+    height: 45px;
+}
+
+.skin-1 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--discord-theme);
+    border-radius: 8px;
+    color: var(--white-color);
+    margin: 8px;
+}
+
+.skin-discord {
+    border-radius: 8px;
+    background-color: var(--discord-theme);
+    background-image: url(../images/discord-logo-white.svg);
+    background-size: 141px;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin: 8px;
+}
+
+.list-games {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.list-games-title,
+.high-scores-title {
+    font-size: 2rem;
+}
+
+.game-board {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    width: 356px;
+    height: 256px;
+    justify-content: end;
+    border: 1px solid var(--gray-color)
+}
+
+.game-board-title {
+    font-size: 1.5rem;
+    text-align: center;
+}

@@ -1,0 +1,30 @@
+:root {
+    font-family: Arial, sans-serif;
+
+    --white-color: #fff;
+    --black-color: #000;
+    --gray-color: #777777;
+    --green-color: #008000;
+    --red-color: #ff0000;
+    --blurple: #7289DA;
+    --discord-theme: #5865F2;
+
+    --player-black: #000;
+    --player-red: #ff0000;
+    --player-orange: #ffa500;
+    --player-yellow: #ffff00;
+    --player-green: #008000;
+    --player-lime: #00ff15;
+    --player-blue: #0000ff;
+    --player-cyan: #00FFFF;
+    --player-purple: #800080;
+    --player-white: #ffffff;
+}
+
+.main-block {
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
