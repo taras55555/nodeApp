@@ -1,7 +1,8 @@
 async function showUserInfo() {
     const result = await fetchGetData('/user');
-
     if (result.length === 1) {
+        const avatarURL = `https://cdn.discordapp.com/avatars/${result[0].user_id}/${result[0].avatar}`;
+        avatar.style.backgroundImage = `url(${avatarURL})`;
         userName.textContent = result[0].username;
         loginButton.style.display = 'none';
         authorizedUser.style.display = 'unset';
@@ -9,18 +10,14 @@ async function showUserInfo() {
 }
 
 function filterOnlyLastCaptures(array) {
-    // console.log(array)
     const filteredData = array.filter((item, index, arr) => {
         const firstIndex = arr.findIndex(
             (element) => element.cell_coordinates === item.cell_coordinates
         );
         return index === firstIndex;
     });
-    // console.log(filteredData)
     return filteredData;
 }
-
-
 
 async function fetchGetData(url) {
     return (await fetch(url)).json();
@@ -77,4 +74,5 @@ async function showCurrentGames() {
     });
 
 }
+
 export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames }
