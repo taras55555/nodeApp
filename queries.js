@@ -95,7 +95,7 @@ function getGameById(idGame) {
     })
 }
 
-function captureCell(parameters, idUser, userGloblName) {
+function captureCell(parameters, idUser, userGloblName, dicordUserAvatar) {
     const spliParameters = parameters.split("&");
     return new Promise((resolve, reject) => {
         if (idUser === undefined) {
@@ -107,19 +107,19 @@ function captureCell(parameters, idUser, userGloblName) {
         const insertQuery = `INSERT INTO games_log (id, id_game, user_id, cell_coordinates, unix_time) VALUES (NULL, '${spliParameters[1]}', '${idUser}', '${spliParameters[0]}', '${myModule.unixTime()}');`
         connection.query(insertQuery, async function (err, result) {
             if (err) reject(err);
-            const settings = await getSettingsByIdUser(spliParameters[1], idUser, userGloblName);
+            const settings = await getSettingsByIdUser(spliParameters[1], idUser, userGloblName, dicordUserAvatar);
             resolve(result);
         })
     })
 }
 
-function getSettingsByIdUser(idGame, idUser, userGloblName) {
+function getSettingsByIdUser(idGame, idUser, userGloblName, dicordUserAvatar) {
     return new Promise((resolve, reject) => {
         const selectQuery = `SELECT * FROM game_settings WHERE id_game = '${idGame}' AND user_id = '${idUser}'`;
         connection.query(selectQuery, function (err, result) {
             if (err) reject(err);
             if (result.length === 0) {
-                setSettings(idGame, idUser, userGloblName);
+                setSettings(idGame, idUser, userGloblName, dicordUserAvatar);
             } else {
 
             }
@@ -137,11 +137,11 @@ function getSettingsByIdGame(idGame) {
         });
     })
 }
-function setSettings(idGame, idUser, userGloblName) {
+function setSettings(idGame, idUser, userGloblName, dicordUserAvatar) {
     return new Promise(async (resolve, reject) => {
         const reservedColors = await getSettingsByIdGame(idGame);
         const randomColor = setPLayerColor(reservedColors);
-        const insertQuery = `INSERT INTO game_settings (id, id_game, user_id, color, user_global_name) VALUES (NULL, '${idGame}', '${idUser}', '${randomColor}', '${userGloblName}')`;
+        const insertQuery = `INSERT INTO game_settings (id, id_game, user_id, color, user_global_name, user_avatar) VALUES (NULL, '${idGame}', '${idUser}', '${randomColor}', '${userGloblName}', '${dicordUserAvatar}')`;
         connection.query(insertQuery, function (err, result) {
             if (err) reject(err);
             resolve(result);

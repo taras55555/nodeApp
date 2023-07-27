@@ -5,6 +5,7 @@ const gameId = currentPath[currentPath.length - 1]
 const allCell = document.querySelectorAll('.game-table-cell');
 
 showUserInfo();
+// watchStream();
 setInterval(watchStream, 1000);
 // const blockSettings = document.querySelector('.colors-settings');
 
@@ -31,36 +32,13 @@ allCell.forEach(cell => {
             });
     })
 });
-// watchStream();
+
 async function watchStream() {
     const streamCurrentGame = await fetchGetData(`/game-stream/${gameId}`);
     console.log(streamCurrentGame)
     const filteredData = filterOnlyLastCaptures(streamCurrentGame[0]);
     settingParameters(filteredData, streamCurrentGame[1]);
     pointsCalculation(streamCurrentGame);
-    // const url = `/game-stream/${gameId}`;
-
-    // const requestOptions = {
-    //     method: 'GET'
-    // };
-
-    // fetch(url, requestOptions).then(response => response.json()).then(data => {
-    //     if (data) {
-    //         console.log('Game Stream:', data);
-    //         const filteredData = data[0].filter((item, index, arr) => {
-
-    //             const firstIndex = arr.findIndex(
-    //                 (element) => element.cell_coordinates === item.cell_coordinates
-    //             );
-    //             return index === firstIndex;
-    //         });
-    //         // console.log('Game Stream Filtered Array:', filteredData);
-    //         settingParameters(filteredData, data[1]);
-    //         pointsCalculation(data);
-    //     }
-    // }).catch(error => {
-    //     console.error('Game Stream:', error);
-    // });
 }
 
 function settingParameters(filteredData, settings) {
@@ -94,8 +72,9 @@ function pointsCalculation(data) {
         if (keyUser === -1) {
             const keyForUserGlobalName = data[1].findIndex(itemInSettings => itemInSettings.user_id === element.user_id);
             const userGlobalName = data[1][keyForUserGlobalName].user_global_name;
+            const userColor = data[1][keyForUserGlobalName].color;
             // arraCalculation.push({ user_id: element.user_id, user_global_name: userGlobalName, scores: scoreCell });
-            arraCalculation.push({ user_id: element.user_id, user_global_name: userGlobalName, scores: scoreCell });
+            arraCalculation.push({ user_id: element.user_id, user_global_name: userGlobalName, scores: scoreCell, color: userColor });
         } else {
             arraCalculation[keyUser].scores = arraCalculation[keyUser].scores + scoreCell
         }
@@ -104,7 +83,9 @@ function pointsCalculation(data) {
     scoresTable.innerHTML = '';
     arraCalculation.forEach(element => {
         const players = document.createElement('div');
-        players.innerHTML = element.user_global_name + ' | ' + element.scores
+        players.classList.add('player-score')
+        players.innerHTML = `<div style="border: 3px solid var(--discord-theme);background-color: ${element.color};width:30px; height:30px;border-radius:50%;"></div><div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${element.user_id}.jpg"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
+
         scoresTable.appendChild(players);
     });
 }

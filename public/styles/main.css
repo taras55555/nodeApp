@@ -130,6 +130,21 @@
 .list-games-title,
 .high-scores-title {
     font-size: 2rem;
+    font-weight: bold;
+}
+
+.player-score {
+    display: flex;
+    align-items: center;
+    font-size: 2rem;
+}
+
+.player-score-coll {
+    text-align: center;
+}
+
+.player-score-coll-points {
+    flex-basis: 200px;
 }
 
 .game-board {

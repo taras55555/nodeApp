@@ -57,11 +57,13 @@ app.get('/', async ({ query, session }, response) => {
 							session.userid = userData.id;
 							session.globalname = userData.global_name;
 							console.log(session.userid);
+							myModule.downloadAvatar(userData.id, userData.avatar)
 						})
 					} else {
 						session.userid = userData.id;
 						session.globalname = userData.global_name;
 						console.log(session.userid);
+						myModule.downloadAvatar(userData.id, userData.avatar)
 					}
 				});
 			}
@@ -106,6 +108,7 @@ app.get('/cell-capture/:parameters', async (request, response) => {
 	const arrayParameters = request.params.parameters;
 	const discordUserId = request.session.userid;
 	const dicordUserGlobalName = request.session.globalname;
+
 	const result = await queries.captureCell(arrayParameters, discordUserId, dicordUserGlobalName);
 	response.send(result);
 	// console.log(arrayParameters + request.session.userid);
