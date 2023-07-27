@@ -40,6 +40,17 @@
     margin: 5px
 }
 
+.game-page {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    max-width: 600px;
+}
+
+.block-scores {
+    margin: 32px 0;
+}
+
 .game-name {
     padding: 16px;
     font-weight: bold;
@@ -56,6 +67,7 @@
 .game-table {
     display: flex;
     flex-direction: column;
+
 }
 
 .game-table-row {
@@ -83,6 +95,10 @@
     display: inline-block;
     width: 185px;
     height: 45px;
+}
+
+.link-button:hover {
+    box-shadow: 3px 3px 25px var(--discord-theme)
 }
 
 .skin-1 {
@@ -126,6 +142,11 @@
     justify-content: space-evenly;
     margin: 16px;
     border-radius: 5px;
+}
+
+.game-board:hover {
+    background-color: var(--light-discord-theme);
+    box-shadow: 3px 3px 25px var(--discord-theme)
 }
 
 .game-board-title {

@@ -8,28 +8,11 @@
 
 <body>
 	<div class="main-block">
-		<header class="header">
-			<div class="header-nav">
-				<div class="game-name">Leader Of Time</div>
-				<div class="dinamic-container">
-					<div class="login-button" id="loginButton">
-						<a class="link-button skin-discord"
-							href="https://discord.com/api/oauth2/authorize?client_id=1131586220951080970&redirect_uri=http%3A%2F%2Fvps-43791.vps-default-host.net%3A80&response_type=code&scope=identify"></a>
-					</div>
-					<div class="authorized-user" id="authorizedUser">
-						<div class="authorized-user-info">
-							<div id="avatar" class="authorized-user-avatar"></div>
-							<div class="authorized-user-name" id="userName"></div>
-						</div>
-						<div class="logout-button"><a href="/logout" class="link-button skin-1">вийти</a></div>
-					</div>
-				</div>
-			</div>
-		</header>
-		<main class="main">
-			<div class="high-scores-title">Live scores</div>
-			<div class="high-scores">
-				
+		<header data-include="/partials/header.partial.html"></header>
+		<main class="main game-page">
+			<div class="block-scores">
+				<div class="high-scores-title">Live scores</div>
+				<div class="high-scores"></div>
 			</div>
 			<div class="game-table">
 				<div class="game-table-row">
@@ -70,6 +53,7 @@
 			</div>
 		</main>
 	</div>
+	<script src="https://unpkg.com/html-data-include@3.3.3/html-data-include.js"></script>
 	<script src="/scripts/game.js"></script>
 </body>
 
