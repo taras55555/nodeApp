@@ -1,12 +1,14 @@
-import { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames } from "./modules.js";
+import { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics } from "./modules.js";
 
 const currentPath = window.location.pathname.split("/");
 const gameId = currentPath[currentPath.length - 1]
 const allCell = document.querySelectorAll('.game-table-cell');
 
 showUserInfo();
+generateMosaics();
 // watchStream();
-setInterval(watchStream, 1000);
+
+setInterval(watchStream, 2000);
 // const blockSettings = document.querySelector('.colors-settings');
 
 

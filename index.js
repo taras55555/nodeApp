@@ -2,7 +2,6 @@ const { request } = require('undici');
 require('dotenv').config();
 const express = require('express');
 const sessions = require('express-session');
-
 const queries = require('./queries');
 const myModule = require('./my_modules');
 const path = require('path');

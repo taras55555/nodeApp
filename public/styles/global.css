@@ -2,6 +2,7 @@
     font-family: Arial, sans-serif;
 
     --white-color: #fff;
+    --white-color-opacity: #ffffffd4;
     --black-color: #000;
     --gray-color: #777777;
     --green-color: #008000;
@@ -9,6 +10,7 @@
     --blurple: #7289DA;
     --discord-theme: #5865F2;
     --light-discord-theme: #b8beff;
+    
 
     --player-black: #000;
     --player-red: #ff0000;

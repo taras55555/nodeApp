@@ -1,1 +1,3 @@
-import ('./game-stream.js');
+document.addEventListener('partialsLoaded', () => {
+    import('./game-stream.js');
+})

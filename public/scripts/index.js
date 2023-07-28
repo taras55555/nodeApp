@@ -1,2 +1,3 @@
-// import ('./discord-OAuth2.js');
-import ('./main.js');
+document.addEventListener('partialsLoaded', () => {
+    import('./main.js');
+})

@@ -75,4 +75,36 @@ async function showCurrentGames() {
 
 }
 
-export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames }
+function generateMosaics() {
+    const footerSquare = document.querySelector('#footerSquare');
+    const headerSquare = document.querySelector('#headerSquare');
+    const headerSquareContainer = document.querySelector('#headerSquareContainer');
+    createSquares(footerSquare, footerSquare);
+    createSquares(headerSquare, headerSquareContainer);
+}
+
+function createSquares(elemntSize, elementFills) {
+
+    const countSquaresWidth = Math.floor(elemntSize.offsetWidth / 29.5);
+    const countSquaresHeight = Math.floor(elemntSize.offsetHeight / 29.5);
+    elementFills.innerHTML = '';
+    for (let i = 0; i < countSquaresWidth * countSquaresHeight; i++) {
+        const square = document.createElement('div');
+        square.classList.add("square");
+        square.style.backgroundColor = 'var(--gray-color)'
+        elementFills.appendChild(square);
+    }
+    const pixels = document.querySelectorAll('.square');
+    pixels.forEach(animatePixel);
+}
+
+function animatePixel(pixel) {
+    const playerCollorsArray = ["#000", "#ff0000", "#ffa500", "#ffff00", "#008000", "#00ff15", "#0000ff", "#00FFFF", "#800080", "#ffffff"];
+    pixel.intervalId = setInterval(() => {
+        pixel.style.backgroundColor = playerCollorsArray[Math.floor(Math.random() * playerCollorsArray.length)];;
+    }, (Math.random() * 5000) + 3000);
+}
+
+window.addEventListener('resize', generateMosaics);
+
+export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics }

@@ -1,3 +1,4 @@
+const { CommandInteractionOptionResolver } = require('discord.js');
 const connection = require('./database');
 const myModule = require('./my_modules');
 
@@ -47,7 +48,7 @@ async function createGame() {
         isGame = await getGameById(randomString);
     }
     return new Promise((resolve, reject) => {
-        const insertQuery = `INSERT INTO games (id, id_game, max_players, date_create, duration_time, is_game_closed, name) VALUES (NULL, '${randomString}', '10', '${myModule.unixTime()}', '3600', '0', '${funnyNameRandom}')`
+        const insertQuery = `INSERT INTO games (id, id_game, max_players, date_create, end_time, is_game_closed, name) VALUES (NULL, '${randomString}', '10', '${myModule.unixTime()}', '${myModule.unixTime()+3600}', '0', '${funnyNameRandom}')`
         connection.query(insertQuery, function (err, result) {
             if (err) reject(err);
             resolve(result);
@@ -77,7 +78,8 @@ function getRandomFunnyName() {
 
 function getCurrentGames() {
     return new Promise((resolve, reject) => {
-        const selectQuery = `SELECT * FROM games WHERE is_game_closed = '0'`;
+        
+        const selectQuery = `SELECT * FROM games WHERE end_time > '${myModule.unixTime()}'`;
         connection.query(selectQuery, function (err, result) {
             if (err) reject(err);
             resolve(result);
