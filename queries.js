@@ -48,7 +48,7 @@ async function createGame() {
         isGame = await getGameById(randomString);
     }
     return new Promise((resolve, reject) => {
-        const insertQuery = `INSERT INTO games (id, id_game, max_players, date_create, end_time, is_game_closed, name) VALUES (NULL, '${randomString}', '10', '${myModule.unixTime()}', '${myModule.unixTime()+3600}', '0', '${funnyNameRandom}')`
+        const insertQuery = `INSERT INTO games (id, id_game, max_players, date_create, end_time, is_game_closed, name) VALUES (NULL, '${randomString}', '10', '${myModule.unixTime()}', '${myModule.unixTime() + 3600}', '0', '${funnyNameRandom}')`
         connection.query(insertQuery, function (err, result) {
             if (err) reject(err);
             resolve(result);
@@ -78,7 +78,6 @@ function getRandomFunnyName() {
 
 function getCurrentGames() {
     return new Promise((resolve, reject) => {
-        
         const selectQuery = `SELECT * FROM games WHERE end_time > '${myModule.unixTime()}'`;
         connection.query(selectQuery, function (err, result) {
             if (err) reject(err);
@@ -89,7 +88,7 @@ function getCurrentGames() {
 
 function getGameById(idGame) {
     return new Promise((resolve, reject) => {
-        const selectQuery = `SELECT * FROM games WHERE id_game = '${idGame}'`;
+        const selectQuery = idGame === undefined ? `SELECT * FROM games` : `SELECT * FROM games WHERE id_game = '${idGame}'`
         connection.query(selectQuery, function (err, result) {
             if (err) reject(err);
             resolve(result);
@@ -153,7 +152,7 @@ function setSettings(idGame, idUser, userGloblName, dicordUserAvatar) {
 
 function setPLayerColor(reservedColors) {
     const playerCollorsArray = ["#000", "#ff0000", "#ffa500", "#ffff00", "#008000", "#00ff15", "#0000ff", "#00FFFF", "#800080", "#ffffff"];
-    const possibleArrayColors = playerCollorsArray.filter((item) => (!isColorReserved(item, reservedColors)))    
+    const possibleArrayColors = playerCollorsArray.filter((item) => (!isColorReserved(item, reservedColors)))
     return possibleArrayColors[Math.floor(Math.random() * possibleArrayColors.length)];
 }
 
@@ -170,4 +169,14 @@ function getGemaLog(idGame) {
     })
 }
 
-module.exports = { findUser, addUser, getUserData, createGame, getCurrentGames, getGameById, captureCell, getGemaLog, getSettingsByIdGame };
+function getGemasLog() {
+    return new Promise((resolve, reject) => {
+        const selectQuery = `SELECT * FROM games_log`;
+        connection.query(selectQuery, function (err, result) {
+            if (err) reject(err);
+            resolve(result);
+        })
+    })
+}
+
+module.exports = { findUser, addUser, getUserData, createGame, getCurrentGames, getGameById, captureCell, getGemaLog, getSettingsByIdGame, getGemasLog };

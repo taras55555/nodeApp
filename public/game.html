@@ -10,6 +10,12 @@
 	<div class="main-block">
 		<header data-include="/partials/header.partial.html"></header>
 		<main class="main game-page">
+			<div class="navigation-pages">
+				<button class="link-button skin-1">Leaderboard</button>
+			</div>
+			<div class="game-title"></div>
+			<div class="game-timer">The game will end in <span id="timer"></span> seconds</div>
+			<input type="hidden" name="deadline" id="deadline">
 			<div class="block-scores">
 				<div class="high-scores-title">Live scores</div>
 				<div class="high-scores"></div>
@@ -57,9 +63,7 @@
 	<script src="https://unpkg.com/html-data-include@3.3.3/html-data-include.js"></script>
 	<script src="/scripts/game.js"></script>
 </body>
-<footer></footer>
 
-</html>
-</body>
+
 
 </html>

@@ -1,14 +1,15 @@
-import { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics } from "./modules.js";
+import { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo } from "./modules.js";
 
 const currentPath = window.location.pathname.split("/");
 const gameId = currentPath[currentPath.length - 1]
 const allCell = document.querySelectorAll('.game-table-cell');
 
 showUserInfo();
+showGameInfo();
 generateMosaics();
 // watchStream();
 
-setInterval(watchStream, 2000);
+setInterval(watchStream, 4000);
 // const blockSettings = document.querySelector('.colors-settings');
 
 
@@ -53,7 +54,10 @@ function settingParameters(filteredData, settings) {
 }
 
 function pointsCalculation(data) {
-    const currentTime = Math.round(new Date().getTime() / 1000);
+    let currentTime = Math.round(new Date().getTime() / 1000);
+    if(currentTime > deadline.value) {
+        currentTime = deadline.value;
+    }
     // console.log(currentTime)
     // console.log(data);
     const arraCalculation = [];
@@ -75,7 +79,6 @@ function pointsCalculation(data) {
             const keyForUserGlobalName = data[1].findIndex(itemInSettings => itemInSettings.user_id === element.user_id);
             const userGlobalName = data[1][keyForUserGlobalName].user_global_name;
             const userColor = data[1][keyForUserGlobalName].color;
-            // arraCalculation.push({ user_id: element.user_id, user_global_name: userGlobalName, scores: scoreCell });
             arraCalculation.push({ user_id: element.user_id, user_global_name: userGlobalName, scores: scoreCell, color: userColor });
         } else {
             arraCalculation[keyUser].scores = arraCalculation[keyUser].scores + scoreCell

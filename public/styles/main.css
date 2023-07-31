@@ -62,7 +62,7 @@
 .game-page {
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin: 30px auto;
     max-width: 600px;
 }
 
@@ -143,6 +143,11 @@
     margin: 8px;
 }
 
+.navigation-pages {
+    display: flex;
+    justify-content: center;
+}
+
 .list-games {
     display: flex;
     flex-wrap: wrap;
@@ -150,9 +155,15 @@
 }
 
 .list-games-title,
-.high-scores-title {
+.high-scores-title,
+.game-title {
+    text-align: center;
     font-size: 2rem;
     font-weight: bold;
+}
+
+.game-title {
+    text-align: center;
 }
 
 .player-score {
@@ -186,7 +197,8 @@
     box-shadow: 3px 3px 25px var(--discord-theme)
 }
 
-.game-board-title {
+.game-board-title,
+.game-timer {
     font-size: 1.5rem;
     text-align: center;
 }

@@ -84,9 +84,26 @@ app.get('/current-games', async (request, response) => {
 	response.send(result);
 });
 
-app.get('/game/:idgame', (request, response) => {
+app.get('/game-info/:idgame', async (request, response) => {
 	const idGame = request.params.idgame;
+	const result = await queries.getGameById(idGame);
+	response.send(result);
+});
+
+app.get('/game/:idgame', (request, response) => {
 	response.sendFile(path.join(__dirname, 'public/game.html'));
+})
+
+app.get('/leaderboard', async (request, response) => {
+	response.sendFile(path.join(__dirname, 'public/leaderboard.html'));
+})
+
+app.get('/leaderboard-info', async (request, response) => {
+	const [...obj] = await Promise.all([
+		queries.getGameById(),
+		queries.getGemasLog()
+	])
+	response.send(obj);
 })
 
 app.get('/logout', (request, response) => {

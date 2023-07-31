@@ -102,9 +102,33 @@ function animatePixel(pixel) {
     const playerCollorsArray = ["#000", "#ff0000", "#ffa500", "#ffff00", "#008000", "#00ff15", "#0000ff", "#00FFFF", "#800080", "#ffffff"];
     pixel.intervalId = setInterval(() => {
         pixel.style.backgroundColor = playerCollorsArray[Math.floor(Math.random() * playerCollorsArray.length)];;
-    }, (Math.random() * 5000) + 3000);
+    }, (Math.random() * 5000) + 1500);
 }
 
 window.addEventListener('resize', generateMosaics);
 
-export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics }
+async function showGameInfo() {
+    const currentPath = window.location.pathname.split("/");
+    const gameId = currentPath[currentPath.length - 1]
+    const result = await fetchGetData(`/game-info/${gameId}`);
+    const gameTitle = document.querySelector('.game-title');
+    const gameTimer = document.querySelector('.game-timer');
+    const currentTime = Math.round(new Date().getTime() / 1000);
+    deadline.value = result[0].end_time;
+    console.log(result[0]);
+
+    gameTitle.textContent = result[0].name
+    const endTime = setInterval(() => {
+        if(timer.textContent<="0") {
+            clearInterval(endTime);
+            gameTimer.textContent = "Game Over"
+        }
+        timer.textContent = timer.textContent-1;
+    },1000)
+    timer.textContent = result[0].end_time - currentTime
+    
+    
+
+}
+
+export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo}
