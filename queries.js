@@ -56,16 +56,6 @@ async function createGame() {
     });
 }
 
-function closeGame() {
-    myModule.unixTime();
-    return new Promise((resolve, reject) => {
-        const selectUpdate = `UPDATE games SET is_game_closed = '1' WHERE date_create < ${myModule.unixTime() - 3600}`;
-        connection.query(selectUpdate, function (err, result) {
-            if (err) reject(err);
-            resolve(result);
-        });
-    });
-}
 function getRandomFunnyName() {
     return new Promise((resolve, reject) => {
         const selectQuery = `SELECT * FROM funny_names`;
@@ -96,31 +86,34 @@ function getGameById(idGame) {
     })
 }
 
-function captureCell(parameters, idUser, userGloblName, dicordUserAvatar) {
+async function captureCell(parameters, idUser, userGloblName) {
     const spliParameters = parameters.split("&");
+    const currentGame = await getGameById(spliParameters[1]);
+    const endTimeCurrentGame = currentGame[0].end_time;
+    if (myModule.unixTime() > endTimeCurrentGame) {
+        return { error: 'Game is over' };
+    }
+    if (idUser === undefined) {
+        return { error: 'Unauthorized' };
+    }
     return new Promise((resolve, reject) => {
-        if (idUser === undefined) {
-            const error = new Error("You need to log in");
-            error.name = "AuthorizationError";
-            resolve({ error });
-            return;
-        }
         const insertQuery = `INSERT INTO games_log (id, id_game, user_id, cell_coordinates, unix_time) VALUES (NULL, '${spliParameters[1]}', '${idUser}', '${spliParameters[0]}', '${myModule.unixTime()}');`
         connection.query(insertQuery, async function (err, result) {
             if (err) reject(err);
-            const settings = await getSettingsByIdUser(spliParameters[1], idUser, userGloblName, dicordUserAvatar);
+            const settings = await getSettingsByIdUser(spliParameters[1], idUser, userGloblName);
             resolve(result);
-        })
+        });
     })
 }
 
-function getSettingsByIdUser(idGame, idUser, userGloblName, dicordUserAvatar) {
+
+function getSettingsByIdUser(idGame, idUser, userGloblName) {
     return new Promise((resolve, reject) => {
         const selectQuery = `SELECT * FROM game_settings WHERE id_game = '${idGame}' AND user_id = '${idUser}'`;
         connection.query(selectQuery, function (err, result) {
             if (err) reject(err);
             if (result.length === 0) {
-                setSettings(idGame, idUser, userGloblName, dicordUserAvatar);
+                setSettings(idGame, idUser, userGloblName);
             } else {
 
             }
@@ -138,11 +131,11 @@ function getSettingsByIdGame(idGame) {
         });
     })
 }
-function setSettings(idGame, idUser, userGloblName, dicordUserAvatar) {
+function setSettings(idGame, idUser, userGloblName) {
     return new Promise(async (resolve, reject) => {
         const reservedColors = await getSettingsByIdGame(idGame);
         const randomColor = setPLayerColor(reservedColors);
-        const insertQuery = `INSERT INTO game_settings (id, id_game, user_id, color, user_global_name, user_avatar) VALUES (NULL, '${idGame}', '${idUser}', '${randomColor}', '${userGloblName}', '${dicordUserAvatar}')`;
+        const insertQuery = `INSERT INTO game_settings (id, id_game, user_id, color, user_global_name, user_avatar) VALUES (NULL, '${idGame}', '${idUser}', '${randomColor}', '${userGloblName}', '')`;
         connection.query(insertQuery, function (err, result) {
             if (err) reject(err);
             resolve(result);

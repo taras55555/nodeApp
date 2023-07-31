@@ -32,7 +32,6 @@ async function showCurrentGames() {
         ['ea', 'eb', 'ec', 'ed', 'ee']
     ]
     const result = await fetchGetData('/current-games');
-    // console.log(result);
     result.forEach(async element => {
         const streamCurrentGame = await fetchGetData(`/game-stream/${element.id_game}`);
         console.log("streamCurrentGame - ", streamCurrentGame);
@@ -116,19 +115,15 @@ async function showGameInfo() {
     const currentTime = Math.round(new Date().getTime() / 1000);
     deadline.value = result[0].end_time;
     console.log(result[0]);
-
+    timer.textContent = result[0].end_time - currentTime > 0 ? result[0].end_time - currentTime : 0;
     gameTitle.textContent = result[0].name
     const endTime = setInterval(() => {
-        if(timer.textContent<="0") {
+        timer.textContent = timer.textContent - 1;
+        if (timer.textContent <= "0") {
             clearInterval(endTime);
             gameTimer.textContent = "Game Over"
         }
-        timer.textContent = timer.textContent-1;
-    },1000)
-    timer.textContent = result[0].end_time - currentTime
-    
-    
-
+    }, 1000)
 }
 
-export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo}
+export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo }

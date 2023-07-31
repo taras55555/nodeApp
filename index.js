@@ -56,13 +56,12 @@ app.get('/', async ({ query, session }, response) => {
 							session.userid = userData.id;
 							session.globalname = userData.global_name;
 							console.log(session.userid);
-							myModule.downloadAvatar(userData.id, userData.avatar)
+
 						})
 					} else {
 						session.userid = userData.id;
 						session.globalname = userData.global_name;
-						console.log(session.userid);
-						myModule.downloadAvatar(userData.id, userData.avatar)
+
 					}
 				});
 			}
@@ -117,18 +116,17 @@ app.get('/game-stream/:code', async (request, response) => {
 		queries.getGemaLog(idGame),
 		queries.getSettingsByIdGame(idGame)
 	])
-	// const result = await queries.getGemaLog(idGame);
 	response.send(obj);
 })
 app.get('/cell-capture/:parameters', async (request, response) => {
 	const arrayParameters = request.params.parameters;
 	const discordUserId = request.session.userid;
-	const dicordUserGlobalName = request.session.globalname;
+	const discordUserGlobalName = request.session.globalname;
 
-	const result = await queries.captureCell(arrayParameters, discordUserId, dicordUserGlobalName);
+	const result = await queries.captureCell(arrayParameters, discordUserId, discordUserGlobalName)
 	response.send(result);
-	// console.log(arrayParameters + request.session.userid);
-})
+});
+
 app.get('/manage-games', (request, response) => {
 	queries.createGame();
 	console.log('created new game');
