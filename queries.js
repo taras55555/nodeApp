@@ -1,4 +1,3 @@
-const { CommandInteractionOptionResolver } = require('discord.js');
 const connection = require('./database');
 const myModule = require('./my_modules');
 
@@ -123,10 +122,9 @@ function getSettingsByIdUser(idGame, idUser, userGloblName) {
 }
 function getSettingsByIdGame(idGame) {
     return new Promise((resolve, reject) => {
-        const selectQuery = `SELECT * FROM game_settings WHERE id_game = '${idGame}'`;
+        const selectQuery = idGame === undefined ? `SELECT * FROM game_settings` : `SELECT * FROM game_settings WHERE id_game = '${idGame}'`;
         connection.query(selectQuery, function (err, result) {
             if (err) reject(err);
-            // console.log(result)
             resolve(result);
         });
     })
@@ -152,9 +150,9 @@ function setPLayerColor(reservedColors) {
 function isColorReserved(color, reservedColors) {
     return reservedColors.some(item => item.color === color);
 }
-function getGemaLog(idGame) {
+function getGameLog(idGame) {
     return new Promise((resolve, reject) => {
-        const selectQuery = `SELECT * FROM games_log WHERE id_game = '${idGame}' ORDER BY id DESC`;
+        const selectQuery = idGame === undefined ? `SELECT * FROM games_log ORDER BY id DESC` : `SELECT * FROM games_log WHERE id_game = '${idGame}' ORDER BY id DESC`;
         connection.query(selectQuery, function (err, result) {
             if (err) reject(err);
             resolve(result);
@@ -162,14 +160,4 @@ function getGemaLog(idGame) {
     })
 }
 
-function getGemasLog() {
-    return new Promise((resolve, reject) => {
-        const selectQuery = `SELECT * FROM games_log`;
-        connection.query(selectQuery, function (err, result) {
-            if (err) reject(err);
-            resolve(result);
-        })
-    })
-}
-
-module.exports = { findUser, addUser, getUserData, createGame, getCurrentGames, getGameById, captureCell, getGemaLog, getSettingsByIdGame, getGemasLog };
+module.exports = { findUser, addUser, getUserData, createGame, getCurrentGames, getGameById, captureCell, getGameLog, getSettingsByIdGame };

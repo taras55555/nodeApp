@@ -21,7 +21,6 @@ app.get('/', async ({ query, session }, response) => {
 	const { code } = query;
 
 	if (code) {
-		// console.log(code)
 		try {
 			const tokenResponseData = await request('https://discord.com/api/oauth2/token', {
 				method: 'POST',
@@ -39,7 +38,6 @@ app.get('/', async ({ query, session }, response) => {
 			});
 
 			const oauthData = await tokenResponseData.body.json();
-			// console.log(oauthData);
 			const userResult = await request('https://discord.com/api/users/@me', {
 				headers: {
 					authorization: `${oauthData.token_type} ${oauthData.access_token}`,
@@ -47,7 +45,6 @@ app.get('/', async ({ query, session }, response) => {
 			});
 			const userData = await userResult.body.json();
 			if (userData.id !== undefined) {
-				// console.log(userData);
 				queries.findUser(userData.id, (err, rowCount) => {
 					if (err) console.error('Помилка запиту:', err);
 					if (rowCount === 0) {
@@ -99,8 +96,9 @@ app.get('/leaderboard', async (request, response) => {
 
 app.get('/leaderboard-info', async (request, response) => {
 	const [...obj] = await Promise.all([
+		queries.getGameLog(),
+		queries.getSettingsByIdGame(),
 		queries.getGameById(),
-		queries.getGemasLog()
 	])
 	response.send(obj);
 })
@@ -113,7 +111,7 @@ app.get('/logout', (request, response) => {
 app.get('/game-stream/:code', async (request, response) => {
 	const idGame = request.params.code;
 	const [...obj] = await Promise.all([
-		queries.getGemaLog(idGame),
+		queries.getGameLog(idGame),
 		queries.getSettingsByIdGame(idGame)
 	])
 	response.send(obj);

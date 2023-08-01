@@ -62,12 +62,19 @@
 .game-page {
     display: flex;
     flex-direction: column;
-    margin: 30px auto;
-    max-width: 600px;
 }
 
 .block-scores {
-    margin: 32px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.high-scores {
+    display: flex;
+    flex-direction: column;
+    width: 600px;
 }
 
 .game-name {
@@ -89,7 +96,8 @@
 .game-table {
     display: flex;
     flex-direction: column;
-
+    align-items: center;
+    margin: 25px 0;
 }
 
 .game-table-row {
@@ -170,6 +178,7 @@
     display: flex;
     align-items: center;
     font-size: 2rem;
+    justify-content: space-between;
 }
 
 .player-score-coll {

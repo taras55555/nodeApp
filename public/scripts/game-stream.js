@@ -1,4 +1,3 @@
-// import { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo } from "./modules.js";
 import { showUserInfo, fetchGetData, filterOnlyLastCaptures, generateMosaics, showGameInfo } from "./modules.js";
 
 const currentPath = window.location.pathname.split("/");
@@ -42,6 +41,7 @@ function pointsCalculation(data) {
     if (currentTime > deadline.value) currentTime = deadline.value;
     const arraCalculation = [];
     const keysLog = [];
+    console.log(data)
     data[0].forEach(element => {
         const isKey = keysLog.findIndex(item => item.key === element.cell_coordinates);
         let scoreCell = currentTime - element.unix_time;

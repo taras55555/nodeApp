@@ -115,7 +115,7 @@ async function showGameInfo() {
     const currentTime = Math.round(new Date().getTime() / 1000);
     deadline.value = result[0].end_time;
     console.log(result[0]);
-    timer.textContent = result[0].end_time - currentTime > 0 ? result[0].end_time - currentTime : 0;
+    timer.textContent = (result[0].end_time - currentTime) > 0 ? (result[0].end_time - currentTime) : 0;
     gameTitle.textContent = result[0].name
     const endTime = setInterval(() => {
         timer.textContent = timer.textContent - 1;
