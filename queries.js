@@ -14,7 +14,8 @@ function findUser(userIdToCheck, callback) {
 }
 
 function addUser(userData, callback) {
-    const unixTime = Math.round(new Date().getTime() / 1000);
+    // const unixTime = Math.round(new Date().getTime() / 1000);
+    const unixTime = myModule.unixTime();
     const addQuery = `INSERT INTO discord_users (id, user_id, username, global_name, avatar, discriminator, public_flags, flags, banner, banner_color, accent_color, locale, mfa_enabled, premium_type, avatar_decoration, date_add) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     connection.query(addQuery, [`${userData.id}`, `${userData.username}`, `${userData.global_name}`, `${userData.avatar}`, `${userData.discriminator}`, `${userData.public_flags}`, `${userData.flags}`, `${userData.banner}`, `${userData.banner_color}`, `${userData.accent_color}`, `${userData.locale}`, `${userData.mfa_enabled}`, `${userData.premium_type}`, `${userData.avatar_decoration}`, `${unixTime}`], function (err, data) {
         if (err) callback(err, null);

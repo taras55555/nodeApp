@@ -1,4 +1,4 @@
-import { showUserInfo, fetchGetData, filterOnlyLastCaptures, generateMosaics, showGameInfo } from "./modules.js";
+import { showUserInfo, fetchGetData, filterOnlyLastCaptures, generateMosaics, showGameInfo, currenUnixTime } from "./modules.js";
 
 const currentPath = window.location.pathname.split("/");
 const gameId = currentPath[currentPath.length - 1]
@@ -7,11 +7,11 @@ const allCell = document.querySelectorAll('.game-table-cell');
 showUserInfo();
 showGameInfo();
 generateMosaics();
-
 setInterval(watchStream, 1000);
-
 allCell.forEach(cell => {
     cell.addEventListener('click', async event => {
+        const currentCell = document.querySelector(`#${event.target.id}`)
+        currentCell.style.backgroundImage = "url('/images/loading-icon.gif')";
         const url = `/cell-capture/${event.target.id}&${gameId}`;
         const result = await fetchGetData(url);
         if (result.error === 'Game is over') alert(result.error);
@@ -33,11 +33,12 @@ function settingParameters(filteredData, settings) {
         const userId = element.user_id;
         const cellColor = settings.find(item => item.user_id === userId).color;
         cell.style.backgroundColor = cellColor;
+        cell.style.backgroundImage = 'unset';
     });
 }
 
 function pointsCalculation(data) {
-    let currentTime = Math.round(new Date().getTime() / 1000);
+    let currentTime = currenUnixTime();
     if (currentTime > deadline.value) currentTime = deadline.value;
     const arraCalculation = [];
     const keysLog = [];

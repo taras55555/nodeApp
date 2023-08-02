@@ -1,4 +1,4 @@
-import { showUserInfo, generateMosaics, fetchGetData } from "./modules.js";
+import { showUserInfo, generateMosaics, fetchGetData, currenUnixTime } from "./modules.js";
 document.addEventListener('partialsLoaded', async () => {
     showUserInfo();
     let stateCheck = setInterval(() => {
@@ -15,7 +15,7 @@ document.addEventListener('partialsLoaded', async () => {
 
 function calculateScores(data) {
     console.log(data)
-    const currentTime = Math.round(new Date().getTime() / 1000);
+    const currentTime = currenUnixTime();
     let finalScores = [];
     data[2].forEach(game => {
         const endGame = currentTime > game.end_time ? game.end_time : currentTime;
@@ -47,7 +47,7 @@ function calculateScores(data) {
         console.log('currentScores: ', currentScores);
         currentScores.forEach(player => {
             const userInFinalTable = finalScores.findIndex(row => row.user_id === player.user_id);
-            userInFinalTable === -1 ? finalScores.push(player): finalScores[userInFinalTable].scores += player.scores;
+            userInFinalTable === -1 ? finalScores.push(player) : finalScores[userInFinalTable].scores += player.scores;
         })
     });
     console.log(finalScores)
@@ -56,7 +56,16 @@ function calculateScores(data) {
     finalScores.forEach(element => {
         const players = document.createElement('div');
         players.classList.add('player-score')
-        players.innerHTML = `<div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${element.user_id}.jpg"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
+
+        const avatarImage = document.createElement('img');
+
+
+        avatarImage.src = `/profile-pictures/${element.user_id}.jpg`
+        avatarImage.onload = function () {
+            // players.appendChild(avatarImage);
+        };
+
+        players.innerHTML = `<div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${element.user_id}.jpg" alt="Avatar"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
         scoresTable.appendChild(players);
     });
 

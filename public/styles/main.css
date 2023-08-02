@@ -109,7 +109,10 @@
     width: 100px;
     height: 100px;
     background-color: var(--gray-color);
-    border: 1px solid var(--black-color)
+    border: 1px solid var(--black-color);
+    background-size: 30px;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .game-table-cell.mini {

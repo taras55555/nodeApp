@@ -1,3 +1,7 @@
+function currenUnixTime() {
+    return Math.round(new Date().getTime() / 1000);
+}
+
 async function showUserInfo() {
     const result = await fetchGetData('/user');
     if (result.length === 1) {
@@ -112,18 +116,19 @@ async function showGameInfo() {
     const result = await fetchGetData(`/game-info/${gameId}`);
     const gameTitle = document.querySelector('.game-title');
     const gameTimer = document.querySelector('.game-timer');
-    const currentTime = Math.round(new Date().getTime() / 1000);
+    let currentTime = currenUnixTime();
     deadline.value = result[0].end_time;
     console.log(result[0]);
     timer.textContent = (result[0].end_time - currentTime) > 0 ? (result[0].end_time - currentTime) : 0;
     gameTitle.textContent = result[0].name
     const endTime = setInterval(() => {
-        timer.textContent = timer.textContent - 1;
-        if (timer.textContent <= "0") {
+        currentTime = currenUnixTime();
+        timer.textContent = deadline.value - currentTime;
+        if (timer.textContent <= 0) {
             clearInterval(endTime);
             gameTimer.textContent = "Game Over"
         }
     }, 1000)
 }
 
-export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo }
+export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo, currenUnixTime }
