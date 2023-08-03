@@ -10,7 +10,7 @@ const app = express();
 const halfDay = 1000 * 60 * 60 * 12;
 app.use(sessions({
 	secret: myModule.generateRandomString(10),
-	saveUninitialized: true,
+	saveUninitialized: false,
 	cookie: { maxAge: halfDay },
 	resave: false
 }));
@@ -45,6 +45,7 @@ app.get('/', async ({ query, session }, response) => {
 				},
 			});
 			const userData = await userResult.body.json();
+			console.log(userData);
 			if (userData.id) {
 				queries.findUser(userData.id, (err, rowCount) => {
 					if (err) console.error('Request error:', err);

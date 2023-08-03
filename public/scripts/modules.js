@@ -117,8 +117,8 @@ function createSquares(elemntSize, elementFills) {
 function animatePixel(pixel) {
     const playerCollorsArray = ["#000", "#ff0000", "#ffa500", "#ffff00", "#008000", "#00ff15", "#0000ff", "#00FFFF", "#800080", "#ffffff"];
     pixel.intervalId = setInterval(() => {
-        pixel.style.backgroundColor = playerCollorsArray[Math.floor(Math.random() * playerCollorsArray.length)];;
-    }, (Math.random() * 5000) + 1500);
+        pixel.style.backgroundColor = playerCollorsArray[Math.floor(Math.random() * playerCollorsArray.length)];
+    }, (Math.random() * 10000) + 1500);
 }
 
 window.addEventListener('resize', generateMosaics);
