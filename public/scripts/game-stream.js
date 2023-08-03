@@ -1,4 +1,4 @@
-import { showUserInfo, fetchGetData, filterOnlyLastCaptures, generateMosaics, showGameInfo, currenUnixTime } from "./modules.js";
+import { showUserInfo, fetchGetData, filterOnlyLastCaptures, generateMosaics, showGameInfo, currenUnixTime, fetchCheckImage } from "./modules.js";
 
 const currentPath = window.location.pathname.split("/");
 const gameId = currentPath[currentPath.length - 1]
@@ -64,12 +64,13 @@ function pointsCalculation(data) {
             arraCalculation[keyUser].scores = arraCalculation[keyUser].scores + scoreCell
         }
     });
+    arraCalculation.sort((a,b) => b.scores - a.scores)
     const scoresTable = document.querySelector('.high-scores');
     scoresTable.innerHTML = '';
     arraCalculation.forEach(element => {
         const players = document.createElement('div');
         players.classList.add('player-score')
-        players.innerHTML = `<div style="border: 3px solid var(--discord-theme);background-color: ${element.color};width:30px; height:30px;border-radius:50%;"></div><div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${element.user_id}.jpg"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
+        players.innerHTML = `<div style="border: 3px solid var(--discord-theme);background-color: ${element.color};width:30px; height:30px;border-radius:50%;"></div><div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${element.user_id}.jpg" onerror="this.src='/profile-pictures/default-image.jpg'" alt="Avatar"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
         scoresTable.appendChild(players);
     });
 }

@@ -27,6 +27,19 @@ async function fetchGetData(url) {
     return (await fetch(url)).json();
 }
 
+async function fetchCheckImage(url) {
+    try {
+        const response = await fetch(url);
+        if (response.ok) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (error) {
+        return false;
+    }
+}
+
 async function showCurrentGames() {
     const arrayCells = [
         ['aa', 'ab', 'ac', 'ad', 'ae'],
@@ -131,4 +144,4 @@ async function showGameInfo() {
     }, 1000)
 }
 
-export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo, currenUnixTime }
+export { showUserInfo, fetchGetData, filterOnlyLastCaptures, showCurrentGames, generateMosaics, showGameInfo, currenUnixTime, fetchCheckImage }
