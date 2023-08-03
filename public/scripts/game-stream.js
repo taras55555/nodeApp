@@ -15,7 +15,7 @@ allCell.forEach(cell => {
         const url = `/cell-capture/${event.target.id}&${gameId}`;
         const result = await fetchGetData(url);
         if (result.error === 'Game is over') alert(result.error);
-        if (result.error === 'Unauthorized') alert(result.error)
+        if (result.error === 'Unauthorized') alert('You need to authorize')
         console.log(result)
     })
 });

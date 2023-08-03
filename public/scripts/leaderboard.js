@@ -53,20 +53,25 @@ function calculateScores(data) {
     console.log(finalScores)
     const scoresTable = document.querySelector('.high-scores');
     scoresTable.innerHTML = '';
-    finalScores.forEach(element => {
+    finalScores.forEach(async element => {
+        let imageName = element.user_id;
         const players = document.createElement('div');
         players.classList.add('player-score')
 
         const avatarImage = document.createElement('img');
-
-
-        avatarImage.src = `/profile-pictures/${element.user_id}.jpg`
+        avatarImage.src = `/profile-pictures/${imageName}.jpg`
         avatarImage.onload = function () {
-            // players.appendChild(avatarImage);
+            imageName = element.user_id
+            players.innerHTML = `<div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${imageName}.jpg" alt="Avatar"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
+            scoresTable.appendChild(players);
         };
-
-        players.innerHTML = `<div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${element.user_id}.jpg" alt="Avatar"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
-        scoresTable.appendChild(players);
+        avatarImage.onerror = function () {
+            imageName = `default-image`;
+            players.innerHTML = `<div class="player-score-coll"><img class="authorized-user-avatar" src="/profile-pictures/${imageName}.jpg" alt="Avatar"></div><div class="player-score-coll player-score-coll-points">` + element.user_global_name + '</div><div class="player-score-coll player-score-coll-points">' + element.scores + '</div>'
+            scoresTable.appendChild(players);
+        }
+        console.log(imageName)
+        
     });
 
 

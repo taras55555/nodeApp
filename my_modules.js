@@ -24,12 +24,7 @@ exports.downloadAvatar = function (userId, avatarHash) {
 
     const imageUrl = `https://cdn.discordapp.com/avatars/${userId}/${avatarHash}`;
     const imageName = `${userId}.jpg`;
-    try {
-        const file = fs.createWriteStream(`public/profile-pictures/${imageName}`, { flags: 'w' });
-
-    } catch (err) {
-        console.log(err);
-    }
+    const file = fs.createWriteStream(`public/profile-pictures/${imageName}`, { flags: 'w' });
     https.get(imageUrl, response => {
         response.pipe(file);
 

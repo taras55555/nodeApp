@@ -5,7 +5,7 @@ function currenUnixTime() {
 async function showUserInfo() {
     const result = await fetchGetData('/user');
     if (result.length === 1) {
-        const avatarURL = `https://cdn.discordapp.com/avatars/${result[0].user_id}/${result[0].avatar}`;
+        const avatarURL = result[0].avatar === 'null' ? `/profile-pictures/default-image.jpg` : `https://cdn.discordapp.com/avatars/${result[0].user_id}/${result[0].avatar}`
         avatar.style.backgroundImage = `url(${avatarURL})`;
         userName.textContent = result[0].username;
         loginButton.style.display = 'none';

@@ -82,6 +82,7 @@
     font-size: 2rem;
     text-align: center;
     padding: 10px;
+    font-family: Dangrek;
 }
 
 .dynamic-container {
@@ -126,38 +127,33 @@
 
 .link-button {
     display: inline-block;
-    width: 185px;
-    height: 45px;
+    border-radius: 8px;
+    margin: 8px;
+    background-color: var(--discord-theme);
+    transition: all 0.6s ease-out;
 }
 
 .link-button:hover {
     box-shadow: 3px 3px 25px var(--discord-theme)
 }
 
-.link-button-2 {
-    display: inline-block;
-    width: 80px;
-    height: 45px;
-}
-
 .skin-1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--discord-theme);
-    border-radius: 8px;
     color: var(--white-color);
-    margin: 8px;
+    width: 185px;
+    height: 45px;
 }
 
 .skin-discord {
-    border-radius: 8px;
-    background-color: var(--discord-theme);
     background-image: url(../images/discord-logo-white.svg);
     background-size: 141px;
     background-repeat: no-repeat;
     background-position: center;
-    margin: 8px;
+    width: 185px;
+    height: 45px;
+    
 }
 
 .skin-home {
@@ -165,7 +161,8 @@
     background-size: 32px;
     background-repeat: no-repeat;
     background-position: center;
-    margin: 8px;
+    width: 55px;
+    height: 45px;
 }
 
 .navigation-menu {
@@ -216,6 +213,8 @@
     justify-content: space-evenly;
     margin: 16px;
     border-radius: 5px;
+    transition: all 0.6s ease-out;
+    ;
 }
 
 .game-board:hover {
@@ -257,11 +256,13 @@ footer {
         font-size: 3rem;
         background-color: var(--white-color-opacity);
         border-radius: 5px;
-        padding: 32px;
+        padding: 0 16px;
+        border: 2px solid var(--discord-theme)
     }
 
     .dynamic-container {
         background-color: var(--white-color-opacity);
         border-radius: 5px;
+        border: 2px solid var(--discord-theme)
     }
 }

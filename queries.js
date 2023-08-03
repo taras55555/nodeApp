@@ -14,7 +14,6 @@ function findUser(userIdToCheck, callback) {
 }
 
 function addUser(userData, callback) {
-    // const unixTime = Math.round(new Date().getTime() / 1000);
     const unixTime = myModule.unixTime();
     const addQuery = `INSERT INTO discord_users (id, user_id, username, global_name, avatar, discriminator, public_flags, flags, banner, banner_color, accent_color, locale, mfa_enabled, premium_type, avatar_decoration, date_add) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     connection.query(addQuery, [`${userData.id}`, `${userData.username}`, `${userData.global_name}`, `${userData.avatar}`, `${userData.discriminator}`, `${userData.public_flags}`, `${userData.flags}`, `${userData.banner}`, `${userData.banner_color}`, `${userData.accent_color}`, `${userData.locale}`, `${userData.mfa_enabled}`, `${userData.premium_type}`, `${userData.avatar_decoration}`, `${unixTime}`], function (err, data) {
@@ -39,8 +38,12 @@ function getUserData(userId) {
 
 
 async function createGame() {
-    const funnyNameArray = await getRandomFunnyName();
-    const funnyNameRandom = funnyNameArray[Math.ceil(Math.random() * funnyNameArray.length - 1)].name;
+    const currentGamesArray = await getCurrentGames();
+    const funnyNamesArray = await getFunnyName();
+    let funnyNameRandom = funnyNamesArray[Math.floor(Math.random() * funnyNamesArray.length)].name;
+    while(currentGamesArray.some(item => item.name === funnyNameRandom)) {
+        funnyNameRandom = funnyNamesArray[Math.floor(Math.random() * funnyNamesArray.length)].name;
+    }
     let isGame = [0];
     let randomString;
     while (isGame.length !== 0) {
@@ -56,7 +59,7 @@ async function createGame() {
     });
 }
 
-function getRandomFunnyName() {
+function getFunnyName() {
     return new Promise((resolve, reject) => {
         const selectQuery = `SELECT * FROM funny_names`;
         connection.query(selectQuery, function (err, result) {

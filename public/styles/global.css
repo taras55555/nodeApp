@@ -1,8 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Dangrek&display=swap');
+
 :root {
     font-family: Arial, sans-serif;
 
     --white-color: #fff;
-    --white-color-opacity: #ffffffd4;
+    --white-color-opacity: #fffffff1;
     --black-color: #000;
     --gray-color: #777777;
     --green-color: #008000;

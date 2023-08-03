@@ -15,6 +15,7 @@ app.use(sessions({
 	resave: false
 }));
 
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', async ({ query, session }, response) => {
@@ -44,21 +45,20 @@ app.get('/', async ({ query, session }, response) => {
 				},
 			});
 			const userData = await userResult.body.json();
-			if (userData.id !== undefined) {
+			if (userData.id) {
 				queries.findUser(userData.id, (err, rowCount) => {
-					if (err) console.error('Помилка запиту:', err);
+					if (err) console.error('Request error:', err);
 					if (rowCount === 0) {
+						session.userid = userData.id;
+						session.globalname = userData.global_name;
 						queries.addUser(userData, (err, result) => {
-							if (err) console.error('Помилка запиту:', err);
-							session.userid = userData.id;
-							session.globalname = userData.global_name;
-							console.log(session.userid);
-
+							if (err) console.error('Request error:', err);
+							if (userData.avatar !== null) myModule.downloadAvatar(userData.id, userData.avatar)
 						})
 					} else {
 						session.userid = userData.id;
 						session.globalname = userData.global_name;
-
+						if (userData.avatar !== null) myModule.downloadAvatar(userData.id, userData.avatar)
 					}
 				});
 			}
